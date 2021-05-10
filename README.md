@@ -4,7 +4,10 @@ O objetivo do projeto é ler um arquivo de texto localizado no dispositivo do us
 
 ##
 ### Tabela de conteúdos
-
+ - [Features](#features)
+ - [Demonstração](#demonstração)
+ - [Tecnologias](#tecnologias)
+ - [Autor](#autor)
 
 ##
 ### Features
