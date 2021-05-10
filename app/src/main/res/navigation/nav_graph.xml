@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listaFuncionarioFragment">
+
+    <fragment
+        android:id="@+id/listaFuncionarioFragment"
+        android:name="com.example.importacaofuncionario.view.ListaFuncionarioFragment"
+        android:label="Funcionarios"
+        tools:layout="@layout/fragment_lista_funcionario" >
+        <action
+            android:id="@+id/action_listaFuncionarioFragment_to_crudFragment"
+            app:destination="@id/crudFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/crudFragment"
+        android:name="com.example.importacaofuncionario.view.CrudFragment"
+        android:label="Detalhes"
+        tools:layout="@layout/fragment_crud" >
+        <argument
+            android:name="funcionario"
+            app:argType="com.example.importacaofuncionario.model.Funcionario"
+            app:nullable="true" />
+    </fragment>
+</navigation>

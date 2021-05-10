@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Importacao Funcionario</string>
+    <string name="banco_dados_vazio">Banco de dados vazio</string>
+    <string name="importar_arquivo_txt">Importar arquivo txt</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="salvar">Salvar</string>
+    <string name="excluir">Excluir</string>
+    <string name="codigo">CÓDIGO:</string>
+    <string name="tituloCrudView">INCLUIR</string>
+    <string name="tituloCrudView2">VISUALIZAR / EDITAR</string>
+    <string name="reservado_1">Reservado 1</string>
+    <string name="reservado_2">Reservado 2</string>
+    <string name="campos_n_o_podem_ser_vazios">CAMPOS NÃO PODEM SER VAZIOS</string>
+    <string name="cod">Cod.</string>
+    <string name="nome_completo">Nome Completo</string>
+    <string name="complemento">Complemento</string>
+
+</resources>

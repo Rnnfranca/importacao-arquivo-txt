@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    android:padding="10dp">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="14dp"
+                    android:text="@string/codigo"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/codigo_funcionario"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:padding="14dp"
+                    android:textStyle="bold"
+                    tools:text="0000001157" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/descricao_funcionario"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:padding="14dp"
+                    tools:text="LAURO GOMES FIGUEIREDO" />
+
+                <TextView
+                    android:id="@+id/complemento"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:padding="14dp"
+                    tools:text="O" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:importantForAccessibility="no"
+                    app:srcCompat="@drawable/ic_avancar" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
