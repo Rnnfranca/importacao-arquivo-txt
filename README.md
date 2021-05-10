@@ -18,8 +18,8 @@ O objetivo do projeto é ler um arquivo de texto localizado no dispositivo do us
 - [X] Inclusão de um cadastrado
 - [X] Alteração de um cadastrado
 - [X] Exclusão de um único cadastro
-- [] Exclusão de todos os cadastros
-- [] Permitir que o usuário escolha a ordem de exibição das informações
+- [ ] Exclusão de todos os cadastros
+- [ ] Permitir que o usuário escolha a ordem de exibição das informações
 
 ##
 ### Demonstração
