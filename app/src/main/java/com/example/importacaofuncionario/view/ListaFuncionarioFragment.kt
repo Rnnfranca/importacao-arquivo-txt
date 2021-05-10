@@ -1,18 +1,19 @@
 package com.example.importacaofuncionario.view
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.importacaofuncionario.R
 import com.example.importacaofuncionario.databinding.FragmentListaFuncionarioBinding
 import com.example.importacaofuncionario.view.adapter.ListaFuncionarioAdapter
 
@@ -35,6 +36,7 @@ class ListaFuncionarioFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentListaFuncionarioBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -48,6 +50,35 @@ class ListaFuncionarioFragment : Fragment() {
         liveDataObservers()
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.lista_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_delete_todos -> {
+                Log.d("onOptionsItemSelected", "Deletar todos clicado!")
+
+                val alert: AlertDialog.Builder = AlertDialog.Builder(context)
+                alert.setTitle("Aviso!")
+                alert.setMessage("Tem certe que deseja excluir TODOS os funcionários?")
+                alert.setPositiveButton("Sim", DialogInterface.OnClickListener { dialog, _ ->
+                    mListaFuncionarioViewModel.deletaTodos()
+                    dialog.dismiss()
+                })
+                alert.setNegativeButton("Não", DialogInterface.OnClickListener { dialog, _ ->
+                    dialog.dismiss()
+                })
+                alert.create().show()
+
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
     private fun clickListeners() {
         binding.botaoImportar.setOnClickListener {
@@ -78,6 +109,7 @@ class ListaFuncionarioFragment : Fragment() {
                     LeitorStatus.EMPTY -> {
                         binding.botaoImportar.visibility = View.VISIBLE
                         binding.textNenhumArquivo.visibility = View.VISIBLE
+                        binding.fabAddFuncionario.visibility = View.INVISIBLE
                     }
                     LeitorStatus.DONE -> {
                         binding.botaoImportar.visibility = View.INVISIBLE

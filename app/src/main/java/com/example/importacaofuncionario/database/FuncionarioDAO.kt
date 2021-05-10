@@ -24,4 +24,7 @@ interface FuncionarioDAO {
 
     @Query("DELETE FROM funcionario_table WHERE codFuncionario = :codFuncionario")
     fun deletaFuncionario(codFuncionario: Long)
+
+    @Query("DELETE FROM funcionario_table")
+    fun deletaTodos()
 }

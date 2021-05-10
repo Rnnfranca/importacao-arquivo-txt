@@ -115,6 +115,23 @@ class ListaFuncionarioViewModel(application: Application) : AndroidViewModel(app
         )
     }
 
+    fun deletaTodos() {
+        compositeDisposable.add(
+            repositoryDatabase.deletaTodos()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(
+                    {
+                        _status.postValue(LeitorStatus.EMPTY)
+                        _listaFuncionario.postValue(mutableListOf())
+                    },
+                    { e ->
+                        e.printStackTrace()
+                    }
+                )
+        )
+    }
+
     override fun onCleared() {
         super.onCleared()
 

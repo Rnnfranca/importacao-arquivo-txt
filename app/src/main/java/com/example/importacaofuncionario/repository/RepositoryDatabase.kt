@@ -74,4 +74,14 @@ class RepositoryDatabase(private val funcionarioDAO: FuncionarioDAO) {
                 emitter.onError(Throwable(e))
             }
         }
+
+    fun deletaTodos() =
+        Completable.create { emitter ->
+            try {
+                funcionarioDAO.deletaTodos()
+                emitter.onComplete()
+            } catch (e: java.lang.Exception) {
+                emitter.onError(Throwable(e))
+            }
+        }
 }

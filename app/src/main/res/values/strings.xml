@@ -6,6 +6,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="salvar">Salvar</string>
     <string name="excluir">Excluir</string>
+    <string name="excluir_todos">Excluir todos</string>
     <string name="codigo">CÓDIGO:</string>
     <string name="tituloCrudView">INCLUIR</string>
     <string name="tituloCrudView2">VISUALIZAR / EDITAR</string>
