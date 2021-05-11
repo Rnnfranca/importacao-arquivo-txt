@@ -2,32 +2,24 @@ package com.example.importacaofuncionario.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.importacaofuncionario.databinding.FuncionarioItemBinding
 import com.example.importacaofuncionario.model.Funcionario
-import com.example.importacaofuncionario.view.ListaFuncionarioFragmentDirections
 
-class ListaFuncionarioAdapter(private var funcionarios: List<Funcionario>) :
+class ListaFuncionarioAdapter(private var funcionarios: List<Funcionario>, val clickListener: (Funcionario) -> Unit) :
     RecyclerView.Adapter<ListaFuncionarioAdapter.ListaViewHolder>() {
 
 
     class ListaViewHolder(private val binding: FuncionarioItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(funcionario: Funcionario, holder: ListaViewHolder) {
+        fun bind(funcionario: Funcionario, clickListener: (Funcionario) -> Unit) {
 
             binding.codigoFuncionario.text = funcionario.codFuncionario.toString()
             binding.descricaoFuncionario.text = funcionario.descFuncionario
             binding.complemento.text = funcionario.complemento
 
-            holder.itemView.setOnClickListener {
-                val action =
-                    ListaFuncionarioFragmentDirections.actionListaFuncionarioFragmentToCrudFragment(
-                        funcionario
-                    )
-                holder.itemView.findNavController().navigate(action)
-            }
+            binding.root.setOnClickListener { clickListener(funcionario) }
 
         }
 
@@ -45,7 +37,7 @@ class ListaFuncionarioAdapter(private var funcionarios: List<Funcionario>) :
     }
 
     override fun onBindViewHolder(holder: ListaViewHolder, position: Int) {
-        holder.bind(funcionarios[position], holder)
+        holder.bind(funcionarios[position], clickListener)
     }
 
 

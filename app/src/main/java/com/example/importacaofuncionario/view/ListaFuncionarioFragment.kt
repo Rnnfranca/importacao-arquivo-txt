@@ -11,10 +11,12 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.importacaofuncionario.R
 import com.example.importacaofuncionario.databinding.FragmentListaFuncionarioBinding
+import com.example.importacaofuncionario.model.Funcionario
 import com.example.importacaofuncionario.view.adapter.ListaFuncionarioAdapter
 
 
@@ -81,6 +83,7 @@ class ListaFuncionarioFragment : Fragment() {
 
 
     private fun clickListeners() {
+
         binding.botaoImportar.setOnClickListener {
             pegaArquivoDoDispositivo()
         }
@@ -90,6 +93,8 @@ class ListaFuncionarioFragment : Fragment() {
                 ListaFuncionarioFragmentDirections.actionListaFuncionarioFragmentToCrudFragment(null)
             binding.fabAddFuncionario.findNavController().navigate(action)
         }
+
+
     }
 
     private fun liveDataObservers() {
@@ -160,7 +165,13 @@ class ListaFuncionarioFragment : Fragment() {
         )
         mListaFuncionarioViewModel =
             ViewModelProvider(this).get(ListaFuncionarioViewModel::class.java)
-        mListaFuncionarioAdapter = ListaFuncionarioAdapter(listOf())
+        mListaFuncionarioAdapter = ListaFuncionarioAdapter(listOf()) { funcionario: Funcionario ->
+            val action =
+                ListaFuncionarioFragmentDirections.actionListaFuncionarioFragmentToCrudFragment(
+                    funcionario
+                )
+            findNavController().navigate(action)
+        }
         recyclerView.adapter = mListaFuncionarioAdapter
     }
 
