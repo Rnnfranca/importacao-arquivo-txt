@@ -66,8 +66,6 @@ class CrudFragment : Fragment() {
             binding.crudReservado2EditText.setText(funcionario.reservado2)
         }
 
-
-
         observers()
         clickListeners(binding.root.context)
 
@@ -95,8 +93,6 @@ class CrudFragment : Fragment() {
 
                         mCrudFragmentViewModel.deletaFuncionario(
                             it.codFuncionario,
-                            binding.root.context,
-                            viewLifecycleOwner
                         )
 
                         mostraToast(
@@ -190,9 +186,6 @@ class CrudFragment : Fragment() {
                         funcionario.reservado2
                     )
 
-                    // atualiza no arquivo
-                    mCrudFragmentViewModel.atualizaFuncionarioNoArquivo(context, viewLifecycleOwner)
-
                     // Toast de sucesso
                     mostraToast(
                         context,
@@ -202,10 +195,7 @@ class CrudFragment : Fragment() {
                     )
                 }
 
-                // esconde o teclado
-//                val inputMethodManager =
-//                    context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//                inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+
                 // volta pra tela inicial
                 binding.root.findNavController().navigateUp()
 

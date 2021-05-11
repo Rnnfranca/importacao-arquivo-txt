@@ -101,7 +101,7 @@ class ListaFuncionarioViewModel(application: Application) : AndroidViewModel(app
     }
 
 
-    private fun criaArquivoLocal(listaFuncionario: MutableList<Funcionario>, context: Context) {
+    fun criaArquivoLocal(listaFuncionario: MutableList<Funcionario>, context: Context) {
         compositeDisposable.add(
             repository.criaArquivoLocal(listaFuncionario, context)
                 .subscribeOn(Schedulers.io())

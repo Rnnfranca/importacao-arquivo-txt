@@ -98,6 +98,7 @@ class ListaFuncionarioFragment : Fragment() {
             { listaFuncionario ->
                 // faz o bind na view
                 mListaFuncionarioAdapter.atualizaViewuncionarios(listaFuncionario)
+                mListaFuncionarioViewModel.criaArquivoLocal(listaFuncionario, binding.root.context)
 
             })
 

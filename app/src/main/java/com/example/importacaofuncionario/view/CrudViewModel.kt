@@ -3,7 +3,9 @@ package com.example.importacaofuncionario.view
 import android.app.Application
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.importacaofuncionario.database.FuncionarioDatabase
 import com.example.importacaofuncionario.model.Funcionario
 import com.example.importacaofuncionario.repository.Repository
@@ -16,15 +18,6 @@ class CrudViewModel(application: Application) : AndroidViewModel(application) {
     // database repository
     private val repositoryDatabase: RepositoryDatabase
     val repository = Repository()
-
-    private val _listaFuncionario = MutableLiveData<MutableList<Funcionario>>()
-    val listaFuncionario: LiveData<MutableList<Funcionario>> get() = _listaFuncionario
-
-    private val _existeFuncionario = MutableLiveData<Boolean>()
-    val existeFuncionario: LiveData<Boolean> get() = _existeFuncionario
-
-    private val _funcionarioDeletado = MutableLiveData<Boolean>()
-    val funcionarioDeletado: LiveData<Boolean> get() = _funcionarioDeletado
 
     private val _maiorCodigo = MutableLiveData<Long>()
     val maiorCodigo: LiveData<Long> get() = _maiorCodigo
@@ -83,7 +76,7 @@ class CrudViewModel(application: Application) : AndroidViewModel(application) {
         descFuncionario: String,
         complemento: String,
         reservado1: String,
-        reservado2: String
+        reservado2: String,
     ) {
 
 
@@ -98,54 +91,10 @@ class CrudViewModel(application: Application) : AndroidViewModel(application) {
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
-                    { Log.d("atualizaFuncionarioDB()", "Completed") },
-                    { t -> t.printStackTrace() }
-                )
-        )
-    }
-
-    fun atualizaFuncionarioNoArquivo(context: Context, viewLifecycleOwner: LifecycleOwner) {
-
-        lerTodosOsDadosDoBanco()
-
-        listaFuncionario.observe(viewLifecycleOwner, Observer { lista ->
-            var funcionariosAtualizados = ""
-
-            lista.forEach { funcionario ->
-                funcionariosAtualizados += "${funcionario.codFuncionario};" +
-                        "${funcionario.descFuncionario};" +
-                        "${funcionario.complemento};" +
-                        "${funcionario.reservado1};" +
-                        "${funcionario.reservado2}\n"
-            }
-
-            compositeDisposable.add(
-                repository.atualizaFuncionarioNoArquivo(context, funcionariosAtualizados)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                    .subscribe(
-                        { Log.d("atualFuncionarioArq()", "Completed") },
-                        { t -> t.printStackTrace() }
-                    )
-            )
-        })
-
-    }
-
-
-    private fun lerTodosOsDadosDoBanco() {
-        compositeDisposable.add(
-            repositoryDatabase.lerTodosOsDadosDoBanco()
-                .doOnError { e -> Log.d("FuncionarioViewModel", "Erro ao buscar: $e") }
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe(
-                    { listaFuncionario ->
-                        _listaFuncionario.postValue(listaFuncionario) // onNext
+                    {
+                        Log.d("atualizaFuncionarioDB()", "Completed")
                     },
-                    { t ->
-                        Throwable(t)
-                    }
+                    { t -> t.printStackTrace() }
                 )
         )
     }
@@ -168,8 +117,6 @@ class CrudViewModel(application: Application) : AndroidViewModel(application) {
 
     fun deletaFuncionario(
         codFuncionario: Long,
-        context: Context,
-        viewLifecycleOwner: LifecycleOwner
     ) {
         compositeDisposable.add(
             repositoryDatabase.deletaFuncionario(codFuncionario)
@@ -177,20 +124,13 @@ class CrudViewModel(application: Application) : AndroidViewModel(application) {
                 .subscribeOn(Schedulers.io())
                 .subscribe(
                     {
-                        _funcionarioDeletado.postValue(true)
                         Log.d("deletaFuncionario()", "Completed")
                     },
                     { t ->
                         t.printStackTrace()
-                        _funcionarioDeletado.postValue(false)
                     }
                 )
         )
-
-        funcionarioDeletado.observe(viewLifecycleOwner, Observer {
-            if (it) atualizaFuncionarioNoArquivo(context, viewLifecycleOwner)
-
-        })
     }
 
     override fun onCleared() {
