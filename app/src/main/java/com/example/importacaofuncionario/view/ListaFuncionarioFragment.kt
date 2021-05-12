@@ -54,7 +54,16 @@ class ListaFuncionarioFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.lista_menu, menu)
+
+        mListaFuncionarioViewModel.status.observe(viewLifecycleOwner, { leitorStatus ->
+            if(leitorStatus == LeitorStatus.DONE) {
+                menu.clear()
+                inflater.inflate(R.menu.lista_menu, menu)
+            } else {
+                menu.clear()
+            }
+        })
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -118,6 +127,7 @@ class ListaFuncionarioFragment : Fragment() {
                         binding.fabAddFuncionario.visibility = View.INVISIBLE
                     }
                     LeitorStatus.DONE -> {
+
                         binding.botaoImportar.visibility = View.INVISIBLE
                         binding.textNenhumArquivo.visibility = View.INVISIBLE
                         binding.fabAddFuncionario.visibility = View.VISIBLE
