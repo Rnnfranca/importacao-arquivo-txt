@@ -3,31 +3,14 @@ package com.example.importacaofuncionario.repository
 import com.example.importacaofuncionario.database.FuncionarioDAO
 import com.example.importacaofuncionario.model.Funcionario
 import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 class RepositoryDatabase(private val funcionarioDAO: FuncionarioDAO) {
 
 
-    fun adicionaTodosFuncionariosNoBanco(funcionarios: List<Funcionario>): Completable {
-        return Completable.create { emitter ->
-
-            funcionarios.forEach { funcionario ->
-                funcionarioDAO.addFuncionario(funcionario)
-            }
-            emitter.onComplete()
-        }
-    }
-
-    fun adicionaFuncionarioNoBanco(funcionario: Funcionario): Completable {
-        return Completable.create { emitter ->
-            try {
-                funcionarioDAO.addFuncionario(funcionario)
-                emitter.onComplete()
-            } catch (t: Throwable) {
-                emitter.onError(t)
-            }
-        }
+    fun adicionaFuncionarioNoBanco(funcionarios: List<Funcionario>): Completable {
+        return funcionarioDAO.addFuncionario(funcionarios)
     }
 
     fun atualizaFuncionarioNoBanco(
@@ -46,42 +29,19 @@ class RepositoryDatabase(private val funcionarioDAO: FuncionarioDAO) {
         )
     }
 
-    fun lerTodosOsDadosDoBanco(): Observable<MutableList<Funcionario>> {
-        return Observable.create<MutableList<Funcionario>> { emitter ->
-            try {
-                emitter.onNext(funcionarioDAO.lerTodosOsDados())
-            } catch (e: Exception) {
-                emitter.onError(e)
-            }
-        }
+    fun lerTodosOsDadosDoBanco(): Flowable<MutableList<Funcionario>> {
+        return funcionarioDAO.lerTodosOsDados()
     }
 
-    fun retornaMaiorCodigo() =
-        Single.create<Long> { emitter ->
-            try {
-                emitter.onSuccess(funcionarioDAO.retornaMaiorCodigo())
-            } catch (e: Exception) {
-                emitter.onError(e)
-            }
-        }
+    fun retornaMaiorCodigo(): Single<Long> {
+        return funcionarioDAO.retornaMaiorCodigo()
+    }
 
-    fun deletaFuncionario(codFuncionario: Long) =
-        Completable.create { emitter ->
-            try {
-                funcionarioDAO.deletaFuncionario(codFuncionario)
-                emitter.onComplete()
-            } catch (e: Exception) {
-                emitter.onError(Throwable(e))
-            }
-        }
+    fun deletaFuncionario(codFuncionario: Long): Completable {
+        return funcionarioDAO.deletaFuncionario(codFuncionario)
+    }
 
-    fun deletaTodos() =
-        Completable.create { emitter ->
-            try {
-                funcionarioDAO.deletaTodos()
-                emitter.onComplete()
-            } catch (e: java.lang.Exception) {
-                emitter.onError(Throwable(e))
-            }
-        }
+    fun deletaTodos(): Completable {
+        return funcionarioDAO.deletaTodos()
+    }
 }

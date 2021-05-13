@@ -29,9 +29,6 @@ class ListaFuncionarioViewModel(application: Application) : AndroidViewModel(app
     // database repository
     private val repositoryDatabase: RepositoryDatabase
 
-    private val _statusInsert = MutableLiveData<String>()
-    val statusInsert: LiveData<String> get() = _statusInsert
-
     val compositeDisposable = CompositeDisposable()
 
     init {
@@ -42,11 +39,11 @@ class ListaFuncionarioViewModel(application: Application) : AndroidViewModel(app
 
     fun adicionaFuncionario(listaFuncionario: List<Funcionario>) {
         compositeDisposable.add(
-            repositoryDatabase.adicionaTodosFuncionariosNoBanco(listaFuncionario)
+            repositoryDatabase.adicionaFuncionarioNoBanco(listaFuncionario)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(
-                    { _statusInsert.postValue("Completed") },
+                    { Log.d("adicionaFuncionario", "Completed") },
                     { t -> t.printStackTrace() }
                 )
         )
@@ -134,7 +131,6 @@ class ListaFuncionarioViewModel(application: Application) : AndroidViewModel(app
 
     override fun onCleared() {
         super.onCleared()
-
         compositeDisposable.clear()
     }
 

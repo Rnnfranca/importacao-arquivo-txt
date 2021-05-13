@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -42,6 +41,12 @@ class ListaFuncionarioFragment : Fragment() {
         return binding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+
+
+        super.onActivityCreated(savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         configuracaoView()
 
@@ -52,6 +57,7 @@ class ListaFuncionarioFragment : Fragment() {
         liveDataObservers()
 
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 
@@ -139,9 +145,6 @@ class ListaFuncionarioFragment : Fragment() {
             }
         })
 
-        mListaFuncionarioViewModel.statusInsert.observe(viewLifecycleOwner, { status ->
-            Log.d("statusInsert", "status insert: $status")
-        })
     }
 
     // após usuario selecionar o arquivo
@@ -188,8 +191,6 @@ class ListaFuncionarioFragment : Fragment() {
     fun pegaArquivoDoDispositivo() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "text/plain"
-        intent.addFlags(FLAG_GRANT_WRITE_URI_PERMISSION)
-        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
         startActivityForResult(intent, FILE_PICK_CODE)
     }
 

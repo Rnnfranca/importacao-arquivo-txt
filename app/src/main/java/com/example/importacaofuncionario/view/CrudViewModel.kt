@@ -52,13 +52,17 @@ class CrudViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun adicionaFuncionarioNoBanco(funcionario: Funcionario) {
-        val func = Funcionario(
-            funcionario.codFuncionario + 1,
-            funcionario.descFuncionario,
-            funcionario.complemento,
-            funcionario.reservado1,
-            funcionario.reservado2
+        val func = listOf(
+            Funcionario(
+                funcionario.codFuncionario + 1,
+                funcionario.descFuncionario,
+                funcionario.complemento,
+                funcionario.reservado1,
+                funcionario.reservado2
+            )
         )
+
+
 
         compositeDisposable.add(
             repositoryDatabase.adicionaFuncionarioNoBanco(func)
@@ -115,9 +119,7 @@ class CrudViewModel(application: Application) : AndroidViewModel(application) {
         )
     }
 
-    fun deletaFuncionario(
-        codFuncionario: Long,
-    ) {
+    fun deletaFuncionario(codFuncionario: Long) {
         compositeDisposable.add(
             repositoryDatabase.deletaFuncionario(codFuncionario)
                 .observeOn(Schedulers.io())

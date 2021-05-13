@@ -14,36 +14,36 @@ class Repository {
     fun criaArquivoLocal(listaFuncionarios: MutableList<Funcionario>, context: Context) =
         Completable.create { emitter ->
 
-        val fileOutPutStream: FileOutputStream
+            val fileOutPutStream: FileOutputStream
 
-        try {
+            try {
 
-            fileOutPutStream = context.openFileOutput(
-                "C_FUNC.txt",
-                Context.MODE_PRIVATE
-            )
-
-            listaFuncionarios.forEach { funcionario ->
-                fileOutPutStream.write(
-                    ("${funcionario.codFuncionario};" +
-                            "${funcionario.descFuncionario};" +
-                            "${funcionario.complemento};" +
-                            "${funcionario.reservado1};" +
-                            "${funcionario.reservado2}\n").toByteArray()
+                fileOutPutStream = context.openFileOutput(
+                    "C_FUNC.txt",
+                    Context.MODE_PRIVATE
                 )
+
+                listaFuncionarios.forEach { funcionario ->
+                    fileOutPutStream.write(
+                        ("${funcionario.codFuncionario};" +
+                                "${funcionario.descFuncionario};" +
+                                "${funcionario.complemento};" +
+                                "${funcionario.reservado1};" +
+                                "${funcionario.reservado2}\n").toByteArray()
+                    )
+                }
+
+                emitter.onComplete()
+
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+                emitter.onError(Throwable(e))
+            } catch (e: IOException) {
+                e.printStackTrace()
+                emitter.onError(Throwable(e))
             }
 
-            emitter.onComplete()
-
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-            emitter.onError(Throwable(e))
-        } catch (e: IOException) {
-            e.printStackTrace()
-            emitter.onError(Throwable(e))
         }
-
-    }
 
 
     fun lerConteudoArquivo(context: Context, uri: Uri) =
@@ -85,36 +85,20 @@ class Repository {
     fun incluirLinhaArquivo(context: Context, funcionario: Funcionario) =
         Completable.create { emitter ->
 
-            FileOutputStream(File(context.filesDir.path, "C_FUNC.txt"), true)
-                .bufferedWriter().use { writer ->
-                    writer.write(
-                        "${funcionario.codFuncionario};" +
-                                "${funcionario.descFuncionario};" +
-                                "${funcionario.complemento};" +
-                                "${funcionario.reservado1};" +
-                                "${funcionario.reservado2}\n"
-                    )
-                }
-
-            emitter.onComplete()
-//            emitter.onError(Throwable())
-        }
-
-    fun atualizaFuncionarioNoArquivo(context: Context, funcionarioAtualizado: String) =
-        Completable.create { emitter ->
-
             try {
-                FileOutputStream(File(context.filesDir.path, "C_FUNC.txt"), false)
+                FileOutputStream(File(context.filesDir.path, "C_FUNC.txt"), true)
                     .bufferedWriter().use { writer ->
-                        writer.write(funcionarioAtualizado)
+                        writer.write(
+                            "${funcionario.codFuncionario};" +
+                                    "${funcionario.descFuncionario};" +
+                                    "${funcionario.complemento};" +
+                                    "${funcionario.reservado1};" +
+                                    "${funcionario.reservado2}\n"
+                        )
                     }
-
                 emitter.onComplete()
-
             } catch (e: Exception) {
-                emitter.onError(Throwable(e))
+                emitter.onError(Throwable())
             }
-
         }
-
 }
