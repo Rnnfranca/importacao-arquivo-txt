@@ -82,40 +82,44 @@ class CrudFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_delete -> {
-                Log.d("CrudFragment", "Deletar selecionado")
+                Log.d("Menu", "Deletar selecionado")
 
-                val alert: AlertDialog.Builder = AlertDialog.Builder(context)
-                alert.setTitle("Aviso!")
-                alert.setMessage("Tem certa que deseja excluir o funcionário?")
-                alert.setPositiveButton("Sim", DialogInterface.OnClickListener { dialog, _ ->
-
-                    funcionario?.also {
-
-                        mCrudFragmentViewModel.deletaFuncionario(
-                            it.codFuncionario,
-                        )
-
-                        mostraToast(
-                            binding.root.context,
-                            it.codFuncionario,
-                            it.descFuncionario,
-                            "Excluído"
-                        )
-                    }
-
-                    dialog.dismiss()
-                    binding.root.findNavController().navigateUp()
-                })
-                alert.setNegativeButton("Não", DialogInterface.OnClickListener { dialog, _ ->
-                    dialog.dismiss()
-                })
-                alert.create().show()
+                mostraDialog()
 
                 return true
             }
             else -> super.onOptionsItemSelected(item)
         }
 
+    }
+
+    private fun mostraDialog() {
+        val alert: AlertDialog.Builder = AlertDialog.Builder(context)
+        alert.setTitle("Aviso!")
+        alert.setMessage("Tem certa que deseja excluir o funcionário?")
+        alert.setPositiveButton("Sim", DialogInterface.OnClickListener { dialog, _ ->
+
+            funcionario?.also {
+
+                mCrudFragmentViewModel.deletaFuncionario(
+                    it.codFuncionario,
+                )
+
+                mostraToast(
+                    binding.root.context,
+                    it.codFuncionario,
+                    it.descFuncionario,
+                    "Excluído"
+                )
+            }
+
+            dialog.dismiss()
+            binding.root.findNavController().navigateUp()
+        })
+        alert.setNegativeButton("Não", DialogInterface.OnClickListener { dialog, _ ->
+            dialog.dismiss()
+        })
+        alert.create().show()
     }
 
     private fun observers() {

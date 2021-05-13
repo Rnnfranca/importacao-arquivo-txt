@@ -78,22 +78,26 @@ class ListaFuncionarioFragment : Fragment() {
             R.id.menu_delete_todos -> {
                 Log.d("onOptionsItemSelected", "Deletar todos clicado!")
 
-                val alert: AlertDialog.Builder = AlertDialog.Builder(context)
-                alert.setTitle("Aviso!")
-                alert.setMessage("Tem certe que deseja excluir TODOS os funcionários?")
-                alert.setPositiveButton("Sim", DialogInterface.OnClickListener { dialog, _ ->
-                    mListaFuncionarioViewModel.deletaTodos()
-                    dialog.dismiss()
-                })
-                alert.setNegativeButton("Não", DialogInterface.OnClickListener { dialog, _ ->
-                    dialog.dismiss()
-                })
-                alert.create().show()
+                mostraDialog()
 
                 return true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun mostraDialog() {
+        val alert: AlertDialog.Builder = AlertDialog.Builder(context)
+        alert.setTitle("Aviso!")
+        alert.setMessage("Tem certe que deseja excluir TODOS os funcionários?")
+        alert.setPositiveButton("Sim", DialogInterface.OnClickListener { dialog, _ ->
+            mListaFuncionarioViewModel.deletaTodos()
+            dialog.dismiss()
+        })
+        alert.setNegativeButton("Não", DialogInterface.OnClickListener { dialog, _ ->
+            dialog.dismiss()
+        })
+        alert.create().show()
     }
 
 
@@ -169,7 +173,7 @@ class ListaFuncionarioFragment : Fragment() {
     }
 
 
-    fun configuracaoView() {
+    private fun configuracaoView() {
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(
             context,
@@ -188,7 +192,7 @@ class ListaFuncionarioFragment : Fragment() {
         recyclerView.adapter = mListaFuncionarioAdapter
     }
 
-    fun pegaArquivoDoDispositivo() {
+    private fun pegaArquivoDoDispositivo() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "text/plain"
         startActivityForResult(intent, FILE_PICK_CODE)
