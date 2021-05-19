@@ -33,6 +33,8 @@ class Repository {
                     )
                 }
 
+                fileOutPutStream.close()
+
                 emitter.onComplete()
 
             } catch (e: FileNotFoundException) {
